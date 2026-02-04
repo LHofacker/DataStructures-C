@@ -45,7 +45,6 @@ void insert(struct LinkedList* list, int input_data){
 		current_node->next_node->data = input_data;
 		current_node->next_node->next_node = NULL;
 		}
-
 }
 
 void print_list(struct LinkedList* list){
@@ -54,19 +53,47 @@ void print_list(struct LinkedList* list){
 	
 		struct Node* current_node = list->head;
 
-		while(current_node->next_node != NULL){
+		while(current_node != NULL){
 
 			printf("%i\n", current_node->data);
 			current_node = current_node->next_node;
 		}
 
-		printf("%i\n", current_node->data);
-		current_node = current_node->next_node;
 	}else{
 
 		printf("List is empty. Nothing to print\n");
 	}
 
+}
+
+int remove_node(struct LinkedList* list, int index){
+	
+	if(list->head != NULL){
+
+		struct Node* current_node = list->head;
+		struct Node* auxiliar_node = NULL;
+		struct Node* another_auxiliar_node = NULL;
+
+		for(int i = 0; i < index - 1; i++){
+
+			current_node = current_node->next_node;
+
+			if(current_node == NULL){
+				
+				printf("ERROR: Index given is larger than list! Operation aborted.\n");
+				return 0;
+			}
+
+		}
+
+		auxiliar_node = current_node->next_node->next_node;
+		another_auxiliar_node = current_node->next_node;
+
+		current_node->next_node = auxiliar_node;
+		free(another_auxiliar_node);
+	}
+
+	return 0;
 }
 
 int main(){
@@ -80,8 +107,10 @@ int main(){
 
 	print_list(test_list);
 
-
-
+	remove_node(test_list, 6);
+	
+	printf("\n\n");
+	print_list(test_list);
 		
 	return 0;
 }
